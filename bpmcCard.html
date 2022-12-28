@@ -43,9 +43,11 @@
   </body>
 
   <script>
+    let idx        = 0
+    const idx_len  = document.getElementsByClassName("inner").length
+    const idx_list = document.querySelector(".inner")
+    const outer    = document.querySelector(".container")
 // 다음 버튼
-    let idx     = 0
-    let idx_len = document.getElementsByClassName("inner").length
     document.querySelector(".next").addEventListener("click", function(){
         // element = document.getElementsByClassName('container')[0]
         console.log(idx);
@@ -69,6 +71,25 @@
             idx -= 1
         }
     })
+// 이미지 자동 루프
+    const getInterval = () => {
+        return setInterval(() => {
+            if (idx >= (idx_len-1)) {
+                document.querySelector(".container").style.transform = "translate("+String(-100*(idx_len-1))+"vw)";
+            } else {
+                document.querySelector(".container").style.transform = "translate("+String(-100*(1+idx))+"vw)";
+                idx += 1
+            }
+        }, 3000);
+    }
+
+    let interval = getInterval(); // interval 등록
+
+// 터치 슬라이드
+
+//   document.querySelector(".container").addEventListener(".touchstart", function() {
+
+//   })
 
   </script>
 
