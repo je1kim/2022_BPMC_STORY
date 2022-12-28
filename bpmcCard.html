@@ -15,81 +15,86 @@
   </head>
 
   <body>
-    <div class="slideArea">
-
-        <div class="container">
-            <div class="inner">
-                <img src="/image/01.jpeg" alt="Img 1">
-            </div>
-            <div class="inner">
-                <img src="/image/02.jpeg" alt="Img 2">
-            </div>
-            <div class="inner">
-                <img src="/image/03.jpeg" alt="Img 3">
-            </div>
-            <div class="inner">
-                <img src="/image/04.jpeg" alt="Img 3">
-            </div>
-            <div class="inner">
-                <img src="/image/06.jpeg" alt="Img 3">
-            </div>        
+    <div data-slide="slide" class="slide">
+        <div class="slide-items">
+            <img src="/image/01.jpeg" alt="Img 1">
+            <img src="/image/02.jpeg" alt="Img 2">
+            <img src="/image/03.jpeg" alt="Img 3">
+            <img src="/image/04.jpeg" alt="Img 4">
+            <!-- <img src="/image/05.jpeg" alt="Img 5"> -->
         </div>
 
-        <div class="btnArea" style="position:absolute; z-index:9999;">
-            <button class="prev">prev</button>
-            <button class="next">next</button>
-        </div>
-    </div>
+        <nav class="slide-nav">
+            <div class="slide-thumb"></div>
+            <button class="slide-prev">Prev</button>
+            <button class="slide-next">Next</button>
+        </nav>
+      </div>
+
   </body>
 
   <script>
-    let idx        = 0
-    const idx_len  = document.getElementsByClassName("inner").length
-    const idx_list = document.querySelector(".inner")
-    const outer    = document.querySelector(".container")
-// 다음 버튼
-    document.querySelector(".next").addEventListener("click", function(){
-        // element = document.getElementsByClassName('container')[0]
-        console.log(idx);
-        // console.log(idx_len);
-        
-        if (idx >= (idx_len-1)) {
-            document.querySelector(".container").style.transform = "translate("+String(-100*(idx_len-1))+"vw)";
-        } else {
-            document.querySelector(".container").style.transform = "translate("+String(-100*(1+idx))+"vw)";
-            idx += 1
-        }
-    })
-
-// 이전 버튼
-    document.querySelector(".prev").addEventListener("click", function(){
-        console.log(idx);
-        if (idx <= 0) {
-            document.querySelector(".container").style.transform = "translate(0vw)";
-        } else {
-            document.querySelector(".container").style.transform = "translate("+String(-100*(idx-1))+"vw)";
-            idx -= 1
-        }
-    })
-// 이미지 자동 루프
-    const getInterval = () => {
-        return setInterval(() => {
-            if (idx >= (idx_len-1)) {
-                document.querySelector(".container").style.transform = "translate("+String(-100*(idx_len-1))+"vw)";
-            } else {
-                document.querySelector(".container").style.transform = "translate("+String(-100*(1+idx))+"vw)";
-                idx += 1
-            }
-        }, 3000);
+    class SlideStories {
+    constructor(id) {
+        this.slide = document.querySelector(`[data-slide="${id}"]`);
+        this.active = 0;
+        this.init();
     }
 
-    let interval = getInterval(); // interval 등록
+    activeSlide(index) {
+        this.active = index;
+        this.items.forEach((item) => item.classList.remove('active'));
+        this.items[index].classList.add('active');
+        this.thumbItems.forEach((item) => item.classList.remove('active'));
+        this.thumbItems[index].classList.add('active');
+        this.autoSlide();
+    }
 
-// 터치 슬라이드
+    prev() {
+        if (this.active > 0) {
+        this.activeSlide(this.active - 1);
+        } else {
+        this.activeSlide(0);
+        }
+    }
 
-//   document.querySelector(".container").addEventListener(".touchstart", function() {
+    next() {
+        if (this.active < this.items.length - 1) {
+            this.activeSlide(this.active + 1);
+        } else {
+            this.activeSlide(this.items.length-1);
+        }
+    }
 
-//   })
+    addNavigation() {
+        const nextBtn = this.slide.querySelector('.slide-next');
+        const prevBtn = this.slide.querySelector('.slide-prev');
+        nextBtn.addEventListener('click', this.next);
+        prevBtn.addEventListener('click', this.prev);
+    }
+
+    addThumbItems() {
+        this.items.forEach(() => (this.thumb.innerHTML += `<span></span>`));
+        this.thumbItems = Array.from(this.thumb.children);
+    }
+
+    autoSlide() {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(this.next, 5000);
+    }
+
+    init() {
+        this.next = this.next.bind(this);
+        this.prev = this.prev.bind(this);
+        this.items = this.slide.querySelectorAll('.slide-items > *');
+        this.thumb = this.slide.querySelector('.slide-thumb');
+        this.addThumbItems();
+        this.activeSlide(0);
+        this.addNavigation();
+    }
+    }
+
+    new SlideStories('slide');
 
   </script>
 
