@@ -21,7 +21,19 @@
             <img src="/image/02.jpeg" alt="Img 2">
             <img src="/image/03.jpeg" alt="Img 3">
             <img src="/image/04.jpeg" alt="Img 4">
-            <!-- <img src="/image/05.jpeg" alt="Img 5"> -->
+            <img src="/image/05.jpeg" alt="Img 5">
+            <img src="/image/06.jpeg" alt="Img 6">
+            <img src="/image/07.jpeg" alt="Img 7">
+            <div class="lastPageArea">
+                <div class="lastImgArea">
+                    <img src="/image/08.jpeg" alt="Img 8">
+                </div>
+                
+                <div  class="textBoxArea">
+                    <span>당신의 감사제목은 무엇입니까?</span>
+                    <input type="text" id="textData" placeholder="내용을 입력하세요..." onkeyup="if(window.event.keyCode==13){enterEvent()}"/>
+                </div>
+            </div>
         </div>
 
         <nav class="slide-nav">
@@ -63,6 +75,8 @@
             this.activeSlide(this.active + 1);
         } else {
             this.activeSlide(this.items.length-1);
+            document.querySelector(".slide-prev").style.display = "none"
+            document.querySelector(".slide-next").style.display = "none"
         }
     }
 
@@ -95,6 +109,30 @@
     }
 
     new SlideStories('slide');
+
+    console.log(document.querySelector("textData"));
+
+    function enterEvent() {
+
+        alert("Pray for You.")
+
+        // let msg = "test"
+
+        // let fileObject = new ActiveXObject("Scripting.FileSystemObject")
+        // let fullPath   = "a.txt"
+
+        // var fWrite = fileObject.CreateTextFile(fullPath,false);
+
+		// fWrite.write(msg);
+
+		// fWrite.close();
+
+        // console.log(fileObject)
+
+
+        let link = "index.html"
+        location.href=link
+    }
 
   </script>
 
