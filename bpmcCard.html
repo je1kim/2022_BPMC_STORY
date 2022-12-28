@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <!-- 이 페이지의 자료 형식을 지정 -->
+    <meta charset="utf-8" />
+    
+    <!-- HTML 페이지의 제목 -->
+    <title>부평감리교회 청년부 22년 이야기</title>
+
+    <!-- 어떤 모니터 혹은 디바이스를 사용하더라도 폭이 각 디바이스 크기에 맞춰 최적화 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    
+    <!-- Swipter JS CSS를 API를 통해 불러오기 -->
+    <link rel="stylesheet" href="/css/main.css"/>
+  </head>
+
+  <body>
+    <div class="slideArea">
+
+        <div class="container">
+            <div class="inner">
+                <img src="/image/01.jpeg" alt="Img 1">
+            </div>
+            <div class="inner">
+                <img src="/image/02.jpeg" alt="Img 2">
+            </div>
+            <div class="inner">
+                <img src="/image/03.jpeg" alt="Img 3">
+            </div>
+            <div class="inner">
+                <img src="/image/04.jpeg" alt="Img 3">
+            </div>
+            <div class="inner">
+                <img src="/image/06.jpeg" alt="Img 3">
+            </div>        
+        </div>
+
+        <div class="btnArea" style="position:absolute; z-index:9999;">
+            <button class="prev">prev</button>
+            <button class="next">next</button>
+        </div>
+    </div>
+  </body>
+
+  <script>
+// 다음 버튼
+    let idx     = 0
+    let idx_len = document.getElementsByClassName("inner").length
+    document.querySelector(".next").addEventListener("click", function(){
+        // element = document.getElementsByClassName('container')[0]
+        console.log(idx);
+        // console.log(idx_len);
+        
+        if (idx >= (idx_len-1)) {
+            document.querySelector(".container").style.transform = "translate("+String(-100*(idx_len-1))+"vw)";
+        } else {
+            document.querySelector(".container").style.transform = "translate("+String(-100*(1+idx))+"vw)";
+            idx += 1
+        }
+    })
+
+// 이전 버튼
+    document.querySelector(".prev").addEventListener("click", function(){
+        console.log(idx);
+        if (idx <= 0) {
+            document.querySelector(".container").style.transform = "translate(0vw)";
+        } else {
+            document.querySelector(".container").style.transform = "translate("+String(-100*(idx-1))+"vw)";
+            idx -= 1
+        }
+    })
+
+  </script>
+
+</html>
